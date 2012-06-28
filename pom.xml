@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.bibounde.pcharts</groupId>
   <artifactId>pcharts</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>GWT Maven Archetype</name>
 
@@ -19,6 +19,18 @@
     <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <distributionManagement>
+    <repository>
+      <id>gae</id>
+      <name>Internal Releases</name>
+      <url>http://gaemvnrepobibounde.appspot.com/repo/release</url>
+    </repository>
+    <snapshotRepository>
+      <id>gae</id>
+      <name>Internal Snapshots</name>
+      <url>http://gaemvnrepobibounde.appspot.com/repo/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
