@@ -6,6 +6,8 @@ import com.bibounde.pcharts.client.AbstractChartWidget;
 import com.bibounde.pcharts.client.ProtovisUtil;
 import com.bibounde.pcharts.client.tooltip.Tooltip;
 import com.bibounde.pcharts.client.tooltip.TooltipComposite.ArrowStyle;
+import com.bibounde.pcharts.shared.bar.BarJSModel;
+import com.bibounde.pcharts.shared.bar.BarJSModelImpl;
 
 public class BarChartWidget extends AbstractChartWidget {
 
@@ -18,14 +20,14 @@ public class BarChartWidget extends AbstractChartWidget {
     
     public BarChartWidget() {
         super(CLASSNAME);
-        this.setModel(new BarWidgetModel());
+        this.setModel(new BarJSModelImpl());
     }
     
-    private BarWidgetModel getBarWidgetModel() {
-        return (BarWidgetModel) this.model;
+    private BarJSModel getBarJSModel() {
+        return (BarJSModel) this.model;
     }
     
-    public native void render   () /*-{
+    public native void render() /*-{
     
     var vbarchart = this;
 
@@ -191,8 +193,6 @@ public class BarChartWidget extends AbstractChartWidget {
     
     public void showTooltip(double left, double top, double bottom, double barBottom, double barWidth, String tooltipText) {
         int arrowOffset = 10;
-        String elt = this.getElement().getId();
-        int absTop = this.getElement().getAbsoluteTop();
         
         int tooltipLeft = this.getElement().getAbsoluteLeft() + Double.valueOf(left).intValue();
         int tooltipTop = this.getElement().getAbsoluteTop() + Double.valueOf(top).intValue();
@@ -236,7 +236,7 @@ public class BarChartWidget extends AbstractChartWidget {
     public String getData() {
         StringBuilder ret = new StringBuilder("[");
         
-        int serieCount = this.getBarWidgetModel().getGroupValues().length;
+        int serieCount = this.getBarJSModel().getGroupValues().length;
         
         for (int i = 0; i < serieCount; i++) {
             if (i > 0) {
@@ -244,7 +244,7 @@ public class BarChartWidget extends AbstractChartWidget {
             }
             ret.append("[");
             
-            double[] values = this.getBarWidgetModel().getGroupValues()[i];
+            double[] values = this.getBarJSModel().getGroupValues()[i];
             for (int j = 0; j < values.length; j++) {
                 if (j > 0) {
                     ret.append(", ");
@@ -260,93 +260,93 @@ public class BarChartWidget extends AbstractChartWidget {
     
     
     public double getPanelBottom() {
-        return this.getBarWidgetModel().getPanelBottom();
+        return this.getBarJSModel().getPanelBottom();
     }
     
     public double getPanelLeft() {
-        return this.getBarWidgetModel().getPanelLeft();
+        return this.getBarJSModel().getPanelLeft();
     }
     
     public double getGroupWidth() {
-        return this.getBarWidgetModel().getGroupWidth();
+        return this.getBarJSModel().getGroupWidth();
     }
     
     public int getGroupCount() {
-        return this.getBarWidgetModel().getGroupValues().length;
+        return this.getBarJSModel().getGroupValues().length;
     }
     
     public double getGroupInset() {
-        return this.getBarWidgetModel().getGroupInset();
+        return this.getBarJSModel().getGroupInset();
     }
     
     public double getBarWidth() {
-        return this.getBarWidgetModel().getBarWidth();
+        return this.getBarJSModel().getBarWidth();
     }
     
     public double getBarHeight() {
-        return this.getBarWidgetModel().getBarHeight();
+        return this.getBarJSModel().getBarHeight();
     }
     
     public double getBarInset() {
-        return this.getBarWidgetModel().getBarInset();
+        return this.getBarJSModel().getBarInset();
     }
     
     public double getPaddingLeft() {
-        return this.getBarWidgetModel().getPaddingLeft();
+        return this.getBarJSModel().getPaddingLeft();
     }
     public double getPaddingRight() {
-        return this.getBarWidgetModel().getPaddingRight();
+        return this.getBarJSModel().getPaddingRight();
     }
     public double getPaddingTop() {
-        return this.getBarWidgetModel().getPaddingTop();
+        return this.getBarJSModel().getPaddingTop();
     }
     public double getPaddingBottom() {
-        return this.getBarWidgetModel().getPaddingBottom();
+        return this.getBarJSModel().getPaddingBottom();
     }
     public boolean isXAxisEnabled() {
-        return this.getBarWidgetModel().isXAxisEnabled();
+        return this.getBarJSModel().isXAxisEnabled();
     }
     public boolean isXAxisLabelEnabled() {
-        return this.getBarWidgetModel().isXAxisLabelEnabled();
+        return this.getBarJSModel().isXAxisLabelEnabled();
     }
     
     public String getGroupNames() {
-        return ProtovisUtil.getJSArray(this.getBarWidgetModel().getGroupNames(), true);
+        return ProtovisUtil.getJSArray(this.getBarJSModel().getGroupNames(), true);
     }
     
     public boolean isYAxisEnabled() {
-        return this.getBarWidgetModel().isYAxisEnabled();
+        return this.getBarJSModel().isYAxisEnabled();
     }
     
     public boolean isYAxisLabelEnabled() {
-        return this.getBarWidgetModel().isYAxisLabelEnabled();
+        return this.getBarJSModel().isYAxisLabelEnabled();
     }
     
     public boolean isYAxisGridEnabled() {
-        return this.getBarWidgetModel().isYAxisGridEnabled();
+        return this.getBarJSModel().isYAxisGridEnabled();
     }
     
     public String getVerticalAxisLabelRangeDValues() {
-        return ProtovisUtil.getJSArray(this.getBarWidgetModel().getYAxisLabelRangeValues());
+        return ProtovisUtil.getJSArray(this.getBarJSModel().getYAxisLabelRangeValues());
     }
     
     public String getVerticalAxisLabelRangeSValues() {
-        return ProtovisUtil.getJSArray(this.getBarWidgetModel().getYAxisLabelRangeTextValues(), true);
+        return ProtovisUtil.getJSArray(this.getBarJSModel().getYAxisLabelRangeTextValues(), true);
     }
     
     public String getSerieNames() {
-        return ProtovisUtil.getJSArray(this.getBarWidgetModel().getSerieNames(), true);
+        return ProtovisUtil.getJSArray(this.getBarJSModel().getSerieNames(), true);
     }
     
     public String getTooltips() {
         StringBuilder ret = new StringBuilder("[");
         
-        int serieCount = this.getBarWidgetModel().getGroupValues().length;
+        int serieCount = this.getBarJSModel().getGroupValues().length;
         for (int i = 0; i < serieCount; i++) {
             if (i > 0) {
                 ret.append(", ");
             }
-            String[] values = this.getBarWidgetModel().getGroupTooltipValues()[i];
+            String[] values = this.getBarJSModel().getGroupTooltipValues()[i];
             
             ret.append("[");
             for (int j = 0; j < values.length; j++) {

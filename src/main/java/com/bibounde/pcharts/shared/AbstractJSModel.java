@@ -1,8 +1,7 @@
-package com.bibounde.pcharts.client;
+package com.bibounde.pcharts.shared;
 
-import java.io.Serializable;
 
-public abstract class AbstractWidgetModel implements Serializable {
+public abstract class AbstractJSModel implements JSModel {
 
     private String id;
     private double width;
@@ -16,7 +15,6 @@ public abstract class AbstractWidgetModel implements Serializable {
     private double legendAreaWidth;
     private double legendInsetLeft;
     private boolean tooltipEnabled;
-    
     
     /**
      * @return the id
@@ -161,7 +159,5 @@ public abstract class AbstractWidgetModel implements Serializable {
      */
     public void setTooltipEnabled(boolean tooltipEnabled) {
         this.tooltipEnabled = tooltipEnabled;
-    }
-   
-    
+    } 
 }

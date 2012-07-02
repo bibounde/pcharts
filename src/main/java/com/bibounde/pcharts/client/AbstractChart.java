@@ -20,24 +20,12 @@ public abstract class AbstractChart extends Composite {
     public void requestRepaint() {
       
         this.widget.getElement().setId(this.chartModel.getId());
-        this.widget.model.setId(this.chartModel.getId());
-        this.widget.model.setWidth(this.chartModel.getWidth());
-        this.widget.model.setHeight(this.chartModel.getHeight());
-        this.widget.model.setMarginLeft(this.chartModel.getMarginLeft());
-        this.widget.model.setMarginBottom(this.chartModel.getMarginBottom());
-        this.widget.model.setMarginRight(this.chartModel.getMarginRight());
-        this.widget.model.setMarginTop(this.chartModel.getMarginTop());
-        this.widget.model.setTooltipEnabled(this.chartModel.isTooltipEnabled());
-        this.widget.model.setColors(this.chartModel.getColors());
-        this.widget.model.setLegendEnabled(this.chartModel.isLegendEnabled());
-        this.widget.model.setLegendAreaWidth(this.chartModel.getLegendAreaWidth());
-        this.widget.model.setLegendInsetLeft(this.chartModel.getLegendInsetLeft());
         
-        this.synchronize();
+        this.updateJSModel();
         this.widget.render();
     }
     
-    protected abstract void synchronize();
+    protected abstract void updateJSModel();
     
     /**
      * Sets html element id

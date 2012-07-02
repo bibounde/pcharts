@@ -1,9 +1,11 @@
-package com.bibounde.pcharts.client.bar;
+package com.bibounde.pcharts.shared.bar;
 
-import com.bibounde.pcharts.client.AbstractWidgetModel;
+import com.bibounde.pcharts.shared.AbstractJSModel;
 
-public class BarWidgetModel extends AbstractWidgetModel {
+public class BarJSModelImpl extends AbstractJSModel implements BarJSModel {
 
+    private static final long serialVersionUID = -132704558650636524L;
+    
     private String[] serieNames;
     private String[] groupNames;
     private String[][] groupTooltipValues;

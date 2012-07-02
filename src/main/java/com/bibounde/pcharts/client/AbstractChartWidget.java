@@ -2,6 +2,7 @@ package com.bibounde.pcharts.client;
 
 import com.bibounde.pcharts.client.tooltip.DefaultTooltipCSSNames;
 import com.bibounde.pcharts.client.tooltip.TooltipCSSNames;
+import com.bibounde.pcharts.shared.JSModel;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -12,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AbstractChartWidget extends Widget {
 
-    protected AbstractWidgetModel model;
+    protected JSModel model;
     private int mouseX = -1;
     private int mouseY = -1;
     private TooltipCSSNames tooltipCSSNames = new DefaultTooltipCSSNames();
@@ -20,7 +21,7 @@ public abstract class AbstractChartWidget extends Widget {
     public AbstractChartWidget(String className) {
         setElement(this.createRootElement());
         setStyleName(className);
-        this.getElement().setId("toto");
+        this.getElement().setId("");
         Event.addNativePreviewHandler(new NativePreviewHandler(){
             public void onPreviewNativeEvent(NativePreviewEvent event) {
                 if (event.getNativeEvent().getType().equals("mousemove"))
@@ -40,14 +41,14 @@ public abstract class AbstractChartWidget extends Widget {
     public native void render()/*-{
     }-*/;
     
-    public void setModel(AbstractWidgetModel model) {
+    public void setModel(JSModel model) {
         this.model = model;
     }
     
     /**
      * @return the model
      */
-    public AbstractWidgetModel getModel() {
+    public JSModel getModel() {
         return model;
     }
 

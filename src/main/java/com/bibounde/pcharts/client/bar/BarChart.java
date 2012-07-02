@@ -2,15 +2,12 @@ package com.bibounde.pcharts.client.bar;
 
 import com.bibounde.pcharts.client.AbstractChart;
 import com.bibounde.pcharts.shared.bar.BarChartHelper;
-import com.bibounde.pcharts.shared.bar.BarChartHelper.ProtovisConvertedData;
 import com.bibounde.pcharts.shared.bar.BarChartModel;
+import com.bibounde.pcharts.shared.bar.BarJSModel;
 import com.bibounde.pcharts.shared.bar.BarTooltipFormatter;
 import com.bibounde.pcharts.shared.bar.DefaultBarTooltipFormatter;
-import com.bibounde.pcharts.shared.bar.Serie;
 import com.bibounde.pcharts.shared.common.AxisLabelFormatter;
 import com.bibounde.pcharts.shared.common.DefaultAxisLabelFormatter;
-import com.bibounde.pcharts.shared.common.Padding;
-import com.bibounde.pcharts.shared.common.Range;
 
 public class BarChart extends AbstractChart {
     
@@ -28,65 +25,9 @@ public class BarChart extends AbstractChart {
     }
     
     @Override
-    protected void synchronize() {
-        BarWidgetModel widgetModel = (BarWidgetModel) this.widget.getModel();
-        
-        int groupCount = 0;
-        double minValue = 0d, maxValue = 0d;
-        for (Serie serie : this.getBarChartModel().getSeries()) {
-            for (int i = 0; i < serie.getValues().length; i++) {
-                minValue = minValue < serie.getValues()[i] ? minValue : serie.getValues()[i];
-                maxValue = maxValue < serie.getValues()[i] ? serie.getValues()[i] : maxValue;
-            }
-            groupCount = groupCount < serie.getValues().length ? serie.getValues().length : groupCount;
-        }
-        Padding padding = new Padding(10d, 10d, 10d, minValue < 0 ? 10d : 0d);
-        String[] groupNames = this.helper.getGroupNames(groupCount);
-        
-        widgetModel.setGroupNames(groupNames);
-        
-        ProtovisConvertedData data = this.helper.getProtovisData(groupNames, tooltipFormatter);
-        widgetModel.setSerieNames(data.serieNames);
-        widgetModel.setGroupValues(data.groupValues);
-        
-        boolean tooltipEnabled = this.getBarChartModel().isTooltipEnabled();
-        widgetModel.setTooltipEnabled(tooltipEnabled);
-        if (tooltipEnabled) {
-            widgetModel.setGroupTooltipValues(data.tooltipValues);
-        }
-        
-        double bottom = this.helper.getAutoBottom(minValue);
-        widgetModel.setPanelBottom(bottom);
-        widgetModel.setPanelLeft(this.getBarChartModel().getMarginLeft());
-        
-        double groupWidth = this.helper.getAutoGroupWidth(groupCount, padding);
-        widgetModel.setGroupWidth(groupWidth);
-        widgetModel.setGroupInset(this.getBarChartModel().getGroupInset());
-        widgetModel.setBarHeight(this.helper.getAutoBarHeight(minValue, maxValue, bottom, padding));
-        widgetModel.setBarWidth(this.helper.getAutoBarWidth(groupWidth));
-        widgetModel.setBarInset(this.getBarChartModel().getBarInset());
-
-        widgetModel.setPaddingLeft(padding.getLeft());
-        widgetModel.setPaddingBottom(padding.getBottom());
-        widgetModel.setPaddingRight(padding.getRight());
-        widgetModel.setPaddingTop(padding.getTop());
-        
-        widgetModel.setXAxisEnabled(this.getBarChartModel().isXAxisEnabled());
-        widgetModel.setXAxisLabelEnabled(this.getBarChartModel().isXAxisLabelEnabled());
-
-        widgetModel.setYAxisEnabled(this.getBarChartModel().isYAxisEnabled());
-        widgetModel.setYAxisLabelEnabled(this.getBarChartModel().isYAxisLabelEnabled());
-
-        // Add y axis values and their formatted text
-        Range rangeY = Range.getAutoRange(minValue, maxValue, this.getBarChartModel().getYAxisLabelStep());
-        double[] rangeYValues = rangeY.getRangeArray();
-        String[] rangeYSValues = new String[rangeYValues.length];
-        for (int i = 0; i < rangeYValues.length; i++) {
-            rangeYSValues[i] = this.yAxisLabelFormatter.format(rangeYValues[i]);
-        }
-        widgetModel.setYAxisLabelRangeValues(rangeYValues);
-        widgetModel.setYAxisLabelRangeTextValues(rangeYSValues);
-        widgetModel.setYAxisGridEnabled(this.getBarChartModel().isYAxisGridEnabled());
+    protected void updateJSModel() {
+        BarJSModel jsModel = (BarJSModel) this.widget.getModel();
+        this.helper.updateJSModel(jsModel, tooltipFormatter, yAxisLabelFormatter);
     }
 
     /**
